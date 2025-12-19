@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Google Sign-In Test</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </head>
+  <body>
+    <h3>Google Login Test</h3>
+
+    <div
+      id="g_id_onload"
+      data-client_id="514222703884-bi4hjj52jrmn0tj6i1ik65smtvbavtbr.apps.googleusercontent.com"
+      data-callback="onGoogle"
+      data-auto_prompt="false"
+    ></div>
+
+    <div class="g_id_signin" data-type="standard" data-shape="pill"></div>
+
+    <pre id="out" style="white-space: pre-wrap"></pre>
+
+    <script>
+      async function onGoogle(resp) {
+        document.getElementById("out").textContent =
+          "Google ID token (resp.credential):\n\n" +
+          resp.credential +
+          "\n\nSending to backend...";
+
+        const r = await fetch("http://localhost:3000/api/auth/google", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ credential: resp.credential }),
+        });
+
+        const j = await r.json().catch(() => null);
+        document.getElementById("out").textContent +=
+          "\n\nBackend response:\n" + JSON.stringify(j, null, 2);
+
+        if (r.ok && j?.token) {
+          localStorage.setItem("token", j.token);
+          document.getElementById("out").textContent +=
+            "\n\nSaved app token to localStorage.token";
+        }
+      }
+    </script>
+  </body>
+</html>

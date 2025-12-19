@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nongkrong Planner - Split Bill Result</title>
+    <link rel="stylesheet" href="./css/splitbill.css" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="logo">
+        <a href="dashboard.html" style="text-decoration: none; color: inherit">
+          <span>Nongkrong Planner</span>
+        </a>
+      </div>
+
+      <div class="nav-right">
+        <button
+          class="new-event-btn"
+          onclick="location.href='createevent.html'"
+        >
+          + New Event
+        </button>
+
+        <button
+          class="icon-btn"
+          onclick="location.href='notification.html'"
+          title="Notifications"
+        >
+          🔔
+        </button>
+
+        <button
+          class="icon-btn"
+          onclick="location.href='profile.html'"
+          title="Profile"
+        >
+          👤
+        </button>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="card">
+        <h1 class="title">Split Bill Result</h1>
+
+        <div class="result-head">
+          <div class="ev-inline">
+            <div id="evTitle" class="subtitle" style="margin: 0">
+              event title
+            </div>
+            <span id="modeBadge" class="badge-mode">EVENLY</span>
+          </div>
+          <div class="total-pill">
+            <span class="t-label">Total Bill</span>
+            <span id="totalAmt" class="t-amt">Rp0</span>
+          </div>
+        </div>
+
+        <ul id="resultList" class="result-list"></ul>
+
+        <div class="final-actions">
+          <button id="backSplit" class="btn-back">← Back to Split Bill</button>
+          <button id="goDash" class="btn-dash">🏠 Back to Dashboard</button>
+          <button id="copySum" class="btn-copy">🗎 Copy Summary</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-links">
+        <a href="#">About</a><a href="#">Contact</a><a href="#">Terms</a
+        ><a href="#">Privacy</a>
+      </div>
+      <p>2025 Nongkrong Planner. All rights reseved.</p>
+    </footer>
+
+    <script defer src="js/app.js"></script>
+    <script defer src="js/api.js"></script>
+    <script defer src="js/splitbill_final.js"></script>
+  </body>
+</html>

@@ -1,0 +1,152 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+:root {
+  --primary: #d38e6c;
+  --accent: #9a5635;
+  --light: #fff;
+  --dark: #3b1e16;
+  --bg-blur: rgba(255, 255, 255, 0.15);
+}
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* LATAR BELAKANG */
+body {
+  background: linear-gradient(135deg, #f0d0c7, #d38e6c, #9a5635);
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* KONTAINER */
+.register-container {
+  display: flex;
+  width: 900px;
+  height: 550px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* FORM SIDE */
+.form-side {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-blur);
+  padding: 40px;
+}
+
+.form-content {
+  width: 100%;
+  max-width: 350px;
+}
+
+.form-content h2 {
+  text-align: center;
+  font-size: 28px;
+  color: var(--dark);
+  margin-bottom: 15px;
+}
+
+.form-content p {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 15px;
+  color: #4a2c21;
+}
+
+/* FORM */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form input {
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1.5px solid #ccc;
+  outline: none;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(154, 86, 53, 0.3);
+}
+
+/* BUTTON */
+.register-btn {
+  background: var(--accent);
+  color: var(--light);
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.register-btn:hover {
+  background: var(--primary);
+  transform: scale(1.03);
+}
+
+/* TEKS REGISTER BAWAH */
+.register-text {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.register-text a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register-text a:hover {
+  text-decoration: underline;
+}
+
+/* IMAGE SIDE */
+.image-side {
+  flex: 1;
+  position: relative;
+}
+
+.image-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* RESPONSIVE */
+@media (max-width: 850px) {
+  .register-container {
+    flex-direction: column-reverse;
+    width: 90%;
+    height: auto;
+  }
+
+  .image-side {
+    height: 220px;
+  }
+
+  .form-side {
+    padding: 30px;
+  }
+}

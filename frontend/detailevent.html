@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nongkrong Planner - Detail Event</title>
+    <link rel="stylesheet" href="./css/detailevent.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="logo">
+        <a href="dashboard.html" style="text-decoration: none; color: inherit">
+          <span>Nongkrong Planner</span>
+        </a>
+      </div>
+
+      <div class="nav-right">
+        <button
+          class="new-event-btn"
+          onclick="location.href='createevent.html'"
+        >
+          + New Event
+        </button>
+
+        <button
+          class="icon-btn"
+          onclick="location.href='notification.html'"
+          title="Notifications"
+        >
+          🔔
+        </button>
+
+        <button
+          class="icon-btn"
+          onclick="location.href='profile.html'"
+          title="Profile"
+        >
+          👤
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN LAYOUT -->
+    <main class="main-layout">
+      <!-- LEFT -->
+      <div class="column-left">
+        <!-- HEADER -->
+        <section class="event-header-card">
+          <h1 id="event-title" class="event-title">Loading...</h1>
+          <p id="event-description" class="event-description">
+            Loading description...
+          </p>
+
+          <div class="event-details">
+            <div class="detail-item">
+              <i class="far fa-calendar-alt"></i><span>Final Date</span>
+              <p id="final-date">—</p>
+            </div>
+            <div class="detail-item">
+              <i class="far fa-clock"></i><span>Final Time</span>
+              <p id="final-time">—</p>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-map-marker-alt"></i><span>Final Location</span>
+              <p id="final-location">—</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- YOUR PREFERENCES -->
+        <section class="preferences-section">
+          <div class="section-header">
+            <h2>Your Preferences</h2>
+            <button id="add-preference-btn" class="add-new-btn">
+              <i class="fas fa-plus"></i> Add New
+            </button>
+          </div>
+          <div id="preference-list"></div>
+        </section>
+
+        <!-- TIME POLL -->
+        <section class="poll-section">
+          <h2>Date/Time Poll</h2>
+          <div id="poll-options-time" class="poll-options"></div>
+        </section>
+
+        <!-- LOCATION POLL -->
+        <section class="poll-section location-poll-section">
+          <h2>Location Poll</h2>
+          <div id="poll-options-location" class="poll-options"></div>
+        </section>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="column-right">
+        <!-- DISCUSSION -->
+        <section class="discussion-card">
+          <h2>Discussion</h2>
+          <div id="messages" class="messages"></div>
+          <div class="chat-input">
+            <input
+              id="chat-input"
+              type="text"
+              placeholder="Write a comment..."
+            />
+            <button id="send-chat-btn">
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- MEMBERS -->
+        <section class="members-card">
+          <h2>Event Members</h2>
+          <div id="member-list" class="member-list"></div>
+          <button class="invite-btn">
+            <i class="fas fa-plus"></i> Invite Members
+          </button>
+        </section>
+
+        <!-- DEADLINE -->
+        <section class="deadline-card">
+          <h2>Polling Deadline</h2>
+          <div class="deadline-info">
+            <i class="fas fa-calendar-times"></i>
+            <span id="poll-deadline">—</span>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-links">
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+      </div>
+      <p>2025 Nongkrong Planner. All rights reserved.</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script defer src="js/app.js"></script>
+    <script defer src="js/api.js"></script>
+    <script defer src="js/detailevent.js"></script>
+  </body>
+</html>

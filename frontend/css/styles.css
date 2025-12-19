@@ -1,0 +1,469 @@
+/* ===========================
+   GLOBAL STYLE
+=========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Arbutus", serif;
+  color: white;
+  overflow-x: hidden;
+  background-color: #fff;
+}
+
+/* ===========================
+   HEADER (TRANSPARAN + BLUR)
+=========================== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffd200;
+}
+
+nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+nav ul li a:hover {
+  color: #ffd200;
+}
+
+/* AUTH BUTTONS */
+.auth-buttons a {
+  text-decoration: none;
+  padding: 6px 15px;
+  margin-left: 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.login-btn {
+  border: 1px solid #ffd200;
+  color: #ffd200;
+}
+
+.login-btn:hover {
+  background: #ffd200;
+  color: black;
+}
+
+.register-btn {
+  background: #ffd200;
+  color: black;
+}
+
+.register-btn:hover {
+  background: #ffb300;
+}
+
+/* ===========================
+   SLIDER / HERO SECTION
+=========================== */
+#home {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.slider {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(60%);
+}
+
+/* TEXT OVER SLIDER */
+.hero-text {
+  position: absolute;
+  bottom: 20%;
+  left: 10%;
+  max-width: 600px;
+}
+
+.hero-text h1 {
+  font-size: 48px;
+  font-weight: 800;
+  color: #ffd200;
+}
+
+.hero-text p {
+  font-size: 18px;
+  color: #f3f3f3;
+  margin-top: 10px;
+}
+
+.highlight {
+  color: white;
+}
+
+/* ARROWS */
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 32px;
+  font-weight: bold;
+  background: rgba(255, 210, 0, 0.8);
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  z-index: 3;
+  transition: background 0.3s;
+}
+
+.prev:hover,
+.next:hover {
+  background: #ffe047;
+}
+
+.prev {
+  left: 20px;
+}
+.next {
+  right: 20px;
+}
+
+/* ===========================
+   ABOUT SECTION
+=========================== */
+#about {
+  scroll-margin-top: 80px; /* agar tidak ketindih navbar */
+}
+
+.about-section {
+  padding: 80px 20px 0px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.about-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #ffd200;
+  margin-bottom: 50px;
+}
+
+/* Popular This Week Cards */
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  /* margin-bottom: 100px; */
+  list-style: none;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  width: 200px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card .content {
+  padding: 15px;
+}
+
+.card h2 {
+  font-size: 1.1rem;
+  color: #ffd200;
+  font-weight: 700;
+}
+
+.card p {
+  color: #555;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.card.highlight {
+  border: 3px solid #ffd200;
+  transform: scale(1.05);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* Tentang NongkrongPlanner */
+.about-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  max-width: 1100px;
+  margin: 0 0 50px 0;
+  text-align: left;
+}
+
+.about-image img {
+  width: 420px;
+  height: 420px;
+  border-radius: 40px;
+  object-fit: cover;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.about-text {
+  max-width: 500px;
+}
+
+.about-text h2 {
+  color: #ffd200;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.about-text p {
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.about-btn {
+  background-color: #ffd200;
+  color: #3d1a0b;
+  padding: 12px 24px;
+  border-radius: 25px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.about-btn:hover {
+  background-color: #ffd300;
+  color: white;
+}
+
+/* ===========================
+   FEATURES SECTION
+=========================== */
+#Features {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0;
+}
+
+.features-content {
+  width: 100%;
+  /* max-width: 1200px; */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.feature-card {
+  background: white;
+  padding: 35px 25px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+}
+
+.feature-card h3 {
+  margin-bottom: 15px;
+  color: #ff8a00;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.feature-card p {
+  color: #444;
+  font-size: 1rem;
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+footer {
+  background: #111;
+  color: white;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: #ffd200;
+  text-decoration: none;
+  margin-right: 15px;
+  font-size: 14px;
+  transition: text-decoration 0.3s;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+/* ===========================
+   RESPONSIVE DESIGN
+=========================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  header {
+    padding: 15px 30px;
+  }
+
+  .hero-text h1 {
+    font-size: 36px;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .about-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-text {
+    text-align: center;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  header {
+    padding: 10px 20px;
+    flex-wrap: wrap;
+  }
+
+  .hero-text h1 {
+    font-size: 32px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-list {
+    justify-content: center;
+  }
+
+  .about-section {
+    padding: 50px 20px;
+  }
+
+  .about-image img {
+    width: 320px;
+    height: 320px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .logo {
+    font-size: 18px;
+  }
+
+  nav ul li a {
+    font-size: 14px;
+  }
+
+  .hero-text h1 {
+    font-size: 26px;
+  }
+
+  .hero-text p {
+    font-size: 14px;
+  }
+
+  .card {
+    width: 140px;
+  }
+
+  footer {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nongkrong Planner - Events</title>
+    <link rel="stylesheet" href="./css/dashboard.css" />
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="logo">
+        <a href="dashboard.html" style="text-decoration: none; color: inherit">
+          <span>Nongkrong Planner</span>
+        </a>
+      </div>
+
+      <div class="nav-right">
+        <button
+          class="new-event-btn"
+          onclick="location.href='createevent.html'"
+        >
+          + New Event
+        </button>
+
+        <button
+          class="icon-btn"
+          onclick="location.href='notification.html'"
+          title="Notifications"
+        >
+          🔔
+        </button>
+
+        <button
+          class="icon-btn"
+          onclick="location.href='profile.html'"
+          title="Profile"
+        >
+          👤
+        </button>
+      </div>
+    </header>
+
+    <!-- TITLE -->
+    <h1 class="page-title">Your Events</h1>
+
+    <!-- UPCOMING PLANS -->
+    <section class="section-container">
+      <h2 class="section-title">Upcoming Plans</h2>
+      <div class="card-wrapper" id="upcoming-events"></div>
+    </section>
+
+    <!-- PAST HANGOUTS -->
+    <section class="section-container peach-background">
+      <h2 class="section-title">Past Hangouts</h2>
+      <div class="card-wrapper" id="past-events"></div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-links">
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+      </div>
+      <p>2025 Nongkrong Planner. All rights reserved.</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script defer src="js/api.js"></script>
+    <script defer src="js/dashboard.js"></script>
+  </body>
+</html>

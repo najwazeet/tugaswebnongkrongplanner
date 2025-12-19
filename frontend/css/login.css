@@ -1,0 +1,202 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("../image/bg1.jpg") center/cover no-repeat;
+  position: relative;
+}
+
+/* BACKGROUND BLUR */
+.background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(5px);
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 0;
+}
+
+/* CONTAINER */
+.login-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: stretch;
+  width: 900px;
+  height: 520px;
+  border-radius: 25px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* KIRI: GAMBAR */
+.image-side {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* KANAN: FORM */
+.form-side {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(25px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px;
+}
+
+/* Padding dalam untuk teks & input */
+.form-content {
+  width: 100%;
+  max-width: 320px;
+}
+
+.form-content h2 {
+  color: #222;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.form-content p {
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* INPUT */
+.form-content input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 2px solid rgba(180, 180, 180, 0.6);
+  border-radius: 10px;
+  font-size: 14px;
+  background-color: rgba(255, 255, 255, 0.9);
+  outline: none;
+  transition: 0.3s;
+}
+
+.form-content input:focus {
+  border-color: #ff8a00;
+}
+
+/* FORGOT LINK */
+.forgot {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.forgot a {
+  color: #333;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.forgot a:hover {
+  color: #ff8a00;
+}
+
+/* BUTTON LOGIN */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: #ff8a00;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-btn:hover {
+  background: #e67700;
+}
+
+/* BUTTON GOOGLE */
+.google-btn {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.google-btn img {
+  width: 18px;
+  height: 18px;
+}
+
+.google-btn:hover {
+  background: #f3f3f3;
+}
+
+/* REGISTER TEXT */
+.register-text {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+}
+
+.register-text a {
+  color: #ff8a00;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-text a:hover {
+  text-decoration: underline;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+  }
+
+  .image-side {
+    padding: 10px;
+  }
+
+  .form-side {
+    padding: 30px;
+  }
+
+  .form-content {
+    max-width: 100%;
+  }
+}

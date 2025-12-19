@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buat Akun — Nongkrong Planner</title>
+    <link rel="stylesheet" href="./css/register.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="background"></div>
+
+    <div class="register-container">
+      <!-- FORM KIRI -->
+      <div class="form-side">
+        <div class="form-content">
+          <h2>Create Your Account</h2>
+
+          <form id="registerForm">
+            <input id="username" type="text" placeholder="Username" required />
+            <input
+              id="email"
+              type="email"
+              placeholder="Email Address"
+              required
+            />
+            <input id="phone" type="tel" placeholder="Phone Number" required />
+            <input
+              id="password"
+              type="password"
+              placeholder="Password"
+              required
+            />
+            <input
+              id="confirmPassword"
+              type="password"
+              placeholder="Confirm Password"
+              required
+            />
+
+            <button type="submit" class="register-btn">Daftar</button>
+
+            <button type="button" class="google-btn" id="googleBtn">
+              <img src="./image/google.svg" alt="" />
+              Daftar dengan Google
+            </button>
+
+            <p class="login-text">
+              Sudah punya akun? <a href="login.html">Masuk</a>
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <!-- GAMBAR KANAN -->
+      <div class="image-side">
+        <img src="./image/login.jpg" alt="nongkrong seru" />
+      </div>
+    </div>
+
+    <script>
+      const API_BASE = "http://localhost:3000";
+
+      document.querySelector("form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = e.target
+          .querySelector('input[type="email"]')
+          .value.trim();
+        const passwords = e.target.querySelectorAll('input[type="password"]');
+        const password = passwords[0].value;
+        const confirmPassword = passwords[1].value;
+
+        if (password !== confirmPassword) {
+          alert("Password dan Confirm Password tidak sama!");
+          return;
+        }
+
+        try {
+          const res = await fetch(`${API_BASE}/api/auth/register`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+
+          const data = await res.json();
+          if (!res.ok) {
+            alert(data.message || "Register gagal");
+            return;
+          }
+
+          alert("Register berhasil! Silakan login.");
+          window.location.href = "login.html";
+        } catch (err) {
+          console.error(err);
+          alert(
+            "Gagal connect ke server. Pastikan backend nyala di port 3000."
+          );
+        }
+      });
+    </script>
+  </body>
+</html>

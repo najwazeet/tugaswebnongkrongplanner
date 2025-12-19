@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Nongkrong Planner</title>
+    <link rel="stylesheet" href="./css/login.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="background"></div>
+
+    <div class="login-container">
+      <!-- Gambar kiri -->
+      <div class="image-side">
+        <img src="./image/login.jpg" alt="nongkrong" />
+      </div>
+
+      <!-- Form kanan -->
+      <div class="form-side">
+        <div class="form-content">
+          <h2>Selamat Datang!</h2>
+          <p>Masuk untuk lanjut mengatur rencana nongkrongmu 🍹</p>
+
+          <form id="loginForm">
+            <input id="email" type="email" placeholder="Email" required />
+            <input
+              id="password"
+              type="password"
+              placeholder="Password"
+              required
+            />
+
+            <div class="forgot">
+              <a href="forgot.html">Lupa Password?</a>
+            </div>
+
+            <button type="submit" class="login-btn">Masuk</button>
+
+            <button type="button" class="google-btn" id="googleBtn">
+              <img src="./image/google.svg" alt="" />
+              Masuk dengan Google
+            </button>
+
+            <p class="register-text">
+              Belum punya akun? <a href="register.html">Daftar</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCRIPT: taruh paling bawah -->
+    <script>
+      const API_BASE = "http://localhost:3000";
+
+      // kalau udah login, langsung lempar ke dashboard
+      if (localStorage.getItem("token")) {
+        window.location.href = "dashboard.html";
+      }
+
+      const form = document.getElementById("loginForm");
+      const emailEl = document.getElementById("email");
+      const passEl = document.getElementById("password");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = emailEl.value.trim();
+        const password = passEl.value;
+
+        try {
+          const res = await fetch(`${API_BASE}/api/auth/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            alert(data.message || "Login gagal");
+            return;
+          }
+
+          localStorage.setItem("token", data.token);
+          if (data.user)
+            localStorage.setItem("user", JSON.stringify(data.user));
+
+          window.location.href = "dashboard.html";
+        } catch (err) {
+          console.error(err);
+          alert(
+            "Gagal connect ke server. Pastikan backend nyala di port 3000."
+          );
+        }
+      });
+
+      // sementara: tombol Google kasih alert dulu
+      document.getElementById("googleBtn").addEventListener("click", () => {
+        alert(
+          "Google login belum dipasang di halaman ini (nanti kita pasang)."
+        );
+      });
+    </script>
+  </body>
+</html>

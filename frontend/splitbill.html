@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nongkrong Planner - Split Bill</title>
+    <link rel="stylesheet" href="./css/splitbill.css" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="logo">
+        <a href="dashboard.html" style="text-decoration: none; color: inherit">
+          <span>Nongkrong Planner</span>
+        </a>
+      </div>
+
+      <div class="nav-right">
+        <button
+          class="new-event-btn"
+          onclick="location.href='createevent.html'"
+        >
+          + New Event
+        </button>
+
+        <button
+          class="icon-btn"
+          onclick="location.href='notification.html'"
+          title="Notifications"
+        >
+          🔔
+        </button>
+
+        <button
+          class="icon-btn"
+          onclick="location.href='profile.html'"
+          title="Profile"
+        >
+          👤
+        </button>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="card">
+        <h1 class="title">Split Bill</h1>
+        <p class="subtitle">Plan your next hangout.</p>
+
+        <!-- Total -->
+        <label class="lbl">Total Bill Amount</label>
+        <input id="totalInput" type="text" class="inp" placeholder="Rp0" />
+
+        <!-- Attendees -->
+        <h3 class="subttl">Attendees</h3>
+        <div id="attendees" class="attendees"></div>
+
+        <!-- Assign Items -->
+        <h3 class="subttl">Assign Items</h3>
+        <div class="assign card-lite">
+          <div class="grid-2">
+            <div>
+              <label class="lbl">Item Name</label>
+              <input
+                id="itemName"
+                class="inp"
+                type="text"
+                placeholder="Value"
+              />
+            </div>
+            <div>
+              <label class="lbl">Item Cost</label>
+              <div class="currency">
+                <span>Rp</span>
+                <input
+                  id="itemCost"
+                  class="inp bare"
+                  type="text"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <label class="lbl">Assign To</label>
+            <select id="assignTo" class="inp">
+              <option value="">Select Attendee</option>
+            </select>
+          </div>
+          <button id="addItem" class="btn-primary">Add Item</button>
+          <ul id="itemsList" class="items"></ul>
+        </div>
+
+        <!-- Split Options -->
+        <h3 class="subttl">Split Options</h3>
+        <div class="split-options">
+          <button id="optEven" class="pill">Evenly</button>
+          <button id="optItem" class="pill">By Item</button>
+        </div>
+
+        <!-- Summary -->
+        <h3 class="subttl">Summary</h3>
+        <div class="summary card-lite">
+          <div id="summaryRows" class="rows"></div>
+          <div id="remainingRow" class="remain"></div>
+        </div>
+
+        <button id="calcBtn" class="btn-cta">Calculate</button>
+        <div class="sb-actions">
+          <button id="sbBack" class="btn-ghost">← Back to Event</button>
+          <button id="finalBtn" class="btn-final">Final Split Bill</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-links">
+        <a href="#">About</a><a href="#">Contact</a><a href="#">Terms</a
+        ><a href="#">Privacy</a>
+      </div>
+      <p>2025 Nongkrong Planner. All rights reseved.</p>
+    </footer>
+
+    <script defer src="js/app.js"></script>
+    <script defer src="js/api.js"></script>
+    <script defer src="js/splitbill.js"></script>
+  </body>
+</html>
