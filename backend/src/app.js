@@ -14,13 +14,19 @@ const notificationRoutes = require("./routes/notifications.routes");
 function createServer() {
   const app = express();
 
+  // connect database
   connectDB();
 
+  // security & logging
   app.use(helmet());
   app.use(morgan("dev"));
-  app.use(express.json({ limit: "1mb" }));
 
-  const allowed = new Set([
+  // body parser
+  app.use(express.json({ limit: "1mb" }));
+  app.use(express.urlencoded({ extended: true }));
+
+  // CORS whitelist
+  const allowedOrigins = new Set([
     "http://localhost:5500",
     "http://127.0.0.1:5500",
     "http://localhost:5502",
@@ -31,13 +37,14 @@ function createServer() {
   app.use(
     cors({
       origin: (origin, cb) => {
-        if (!origin) return cb(null, true); // curl/postman
-        return cb(null, allowed.has(origin));
+        if (!origin) return cb(null, true); // Postman / curl
+        return cb(null, allowedOrigins.has(origin));
       },
       credentials: false,
     })
   );
 
+  // rate limit
   app.use(
     rateLimit({
       windowMs: 60 * 1000,
@@ -45,12 +52,17 @@ function createServer() {
     })
   );
 
-  app.get("/health", (req, res) => res.json({ ok: true }));
+  // health check
+  app.get("/health", (req, res) => {
+    res.json({ ok: true });
+  });
 
+  // routes
   app.use("/api/auth", authRoutes);
   app.use("/api/events", eventRoutes);
   app.use("/api/notifications", notificationRoutes);
 
+  // error handlers
   app.use(notFound);
   app.use(errorHandler);
 

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      const token = new URLSearchParams(window.location.search).get("token");
+
+      if (!token) {
+        alert("Login failed");
+        location.href = "login.html";
+      } else {
+        localStorage.setItem("token", token);
+        location.href = "dashboard.html";
+      }
+    </script>
+  </body>
+</html>
