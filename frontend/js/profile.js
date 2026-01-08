@@ -21,9 +21,13 @@ document.addEventListener("DOMContentLoaded", () => {
     btnLogout: Array.from(document.querySelectorAll("button")).find(
       (b) => (b.textContent || "").trim().toLowerCase() === "logout"
     ),
-    btnChangePassword: Array.from(document.querySelectorAll("button")).find(
-      (b) => (b.textContent || "").trim().toLowerCase() === "change password"
-    ),
+    btnChangePassword: document.getElementById("changePasswordBtn"),
+    // Notification elements
+    notifEnabled: document.getElementById("notifEnabled"),
+    notifH3: document.getElementById("notifH3"),
+    notifH1: document.getElementById("notifH1"),
+    notifUpdates: document.getElementById("notifUpdates"),
+    saveNotifBtn: document.getElementById("saveNotifBtn"),
   };
 
   function setUser(u) {
@@ -35,11 +39,25 @@ document.addEventListener("DOMContentLoaded", () => {
       el.inputEmail.value = u?.email || "";
       el.inputEmail.disabled = true;
     }
+
+    // Set notification preferences
+    if (u?.emailNotifications) {
+      const prefs = u.emailNotifications;
+      if (el.notifEnabled) el.notifEnabled.checked = prefs.enabled !== false;
+      if (el.notifH3) el.notifH3.checked = prefs.reminderH3 !== false;
+      if (el.notifH1) el.notifH1.checked = prefs.reminderH1 !== false;
+      if (el.notifUpdates) el.notifUpdates.checked = prefs.eventUpdates !== false;
+    }
   }
 
   async function loadMe() {
-    const data = await apiFetch("/api/auth/me");
-    setUser(data.user);
+    try {
+      const data = await apiFetch("/api/auth/me");
+      setUser(data.user);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to load profile");
+    }
   }
 
   async function saveMe() {
@@ -57,6 +75,37 @@ document.addEventListener("DOMContentLoaded", () => {
     setUser(data.user);
     localStorage.setItem("user", JSON.stringify(data.user));
     alert("Profile tersimpan.");
+  }
+
+  // Save notification settings
+  if (el.saveNotifBtn) {
+    el.saveNotifBtn.addEventListener("click", async () => {
+      try {
+        el.saveNotifBtn.disabled = true;
+        el.saveNotifBtn.textContent = "Saving...";
+
+        const payload = {
+          enabled: el.notifEnabled?.checked || false,
+          reminderH3: el.notifH3?.checked || false,
+          reminderH1: el.notifH1?.checked || false,
+          eventUpdates: el.notifUpdates?.checked || false,
+        };
+
+        await apiFetch("/api/auth/notifications", {
+          method: "PUT",
+          body: JSON.stringify(payload),
+        });
+
+        alert("Notification settings saved successfully!");
+        el.saveNotifBtn.textContent = "Save Notification Settings";
+        el.saveNotifBtn.disabled = false;
+      } catch (err) {
+        console.error(err);
+        alert(err?.message || "Failed to save notification settings");
+        el.saveNotifBtn.textContent = "Save Notification Settings";
+        el.saveNotifBtn.disabled = false;
+      }
+    });
   }
 
   if (el.btnSave) {
@@ -88,16 +137,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  (async () => {
-    try {
-      await loadMe();
-    } catch (err) {
-      console.error(err);
-      alert(err?.message || "Gagal memuat profile.");
-      if ((err?.message || "").toLowerCase().includes("token")) {
-        localStorage.removeItem("token");
-        window.location.href = "login.html";
-      }
-    }
-  })();
+  // Load user data on page load
+  loadMe();
 });

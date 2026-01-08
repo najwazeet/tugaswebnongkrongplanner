@@ -1,15 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Berhasil - Nongkrong Planner</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: "Poppins", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #ffefc2 0%, #fff2de 100%);
+      }
+      
+      .loading-container {
+        text-align: center;
+        padding: 40px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+      
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #ff9f43;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      h2 {
+        color: #333;
+        margin-bottom: 10px;
+      }
+      
+      p {
+        color: #666;
+        font-size: 14px;
+      }
+      
+      .error {
+        color: #e74c3c;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
   <body>
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <h2>Login dengan Google Berhasil!</h2>
+      <p>Mengalihkan ke dashboard...</p>
+      <p id="errorMsg" class="error" style="display: none;"></p>
+    </div>
+
     <script>
-      const token = new URLSearchParams(window.location.search).get("token");
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get("token");
+      const errorMsg = document.getElementById("errorMsg");
 
       if (!token) {
-        alert("Login failed");
-        location.href = "login.html";
+        errorMsg.textContent = "Token tidak ditemukan. Redirecting ke login...";
+        errorMsg.style.display = "block";
+        
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 2000);
       } else {
+        // Simpan token ke localStorage
         localStorage.setItem("token", token);
-        location.href = "dashboard.html";
+        
+        // Fetch user info
+        fetch("http://localhost:3000/api/auth/me", {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.user) {
+            localStorage.setItem("user", JSON.stringify(data.user));
+          }
+          
+          // Redirect ke dashboard
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 1000);
+        })
+        .catch(err => {
+          console.error("Error fetching user:", err);
+          // Tetap redirect meski gagal fetch user
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 1000);
+        });
       }
     </script>
   </body>

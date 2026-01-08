@@ -46,7 +46,22 @@
 cp .env.example .env
 ```
 
-Lalu edit nilai JWT_SECRET (wajib).
+**File .env minimal:**
+
+```env
+PORT=3000
+MONGO_URI=mongodb://localhost:27017/nongkrong_planner
+JWT_SECRET=your-super-secret-key-change-this
+JWT_EXPIRES_IN=7d
+FRONTEND_URL=http://localhost:5500
+
+# Optional - untuk Google OAuth (lihat GOOGLE_OAUTH_SETUP.md)
+GOOGLE_CLIENT_ID=your-client-id
+GOOGLE_CLIENT_SECRET=your-client-secret
+GOOGLE_CALLBACK_URL=http://localhost:3000/api/auth/google/callback
+```
+
+**PENTING:** Ganti `JWT_SECRET` dengan string random yang kuat!
 
 2. Install dependencies
 
@@ -65,7 +80,30 @@ API: http://localhost:3000
 
 Frontend (Live Server): http://localhost:5500
 
-Reset Database
+---
+
+## 🔐 Setup Google OAuth (Optional)
+
+Untuk mengaktifkan login/register dengan Google:
+
+1. Baca panduan lengkap di: **[GOOGLE_OAUTH_SETUP.md](../GOOGLE_OAUTH_SETUP.md)**
+2. Dapatkan credentials dari [Google Cloud Console](https://console.cloud.google.com/)
+3. Tambahkan ke `.env`:
+   ```env
+   GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
+   GOOGLE_CLIENT_SECRET=xxx
+   GOOGLE_CALLBACK_URL=http://localhost:3000/api/auth/google/callback
+   ```
+4. Restart server
+
+**Tanpa Google OAuth:**
+
+- User tetap bisa register/login dengan email & password
+- Tombol "Login dengan Google" akan redirect ke error page
+
+---
+
+## Reset Database
 
 ```bash
 mongosh

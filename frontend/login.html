@@ -57,10 +57,12 @@
     <script>
       const API_BASE = "http://localhost:3000";
 
+      // Redirect jika sudah login
       if (localStorage.getItem("token")) {
         window.location.href = "dashboard.html";
       }
 
+      // ===== LOGIN EMAIL/PASSWORD =====
       document
         .getElementById("loginForm")
         .addEventListener("submit", async (e) => {
@@ -68,6 +70,17 @@
 
           const email = document.getElementById("email").value.trim();
           const password = document.getElementById("password").value;
+
+          if (!email || !password) {
+            alert("Email dan password harus diisi!");
+            return;
+          }
+
+          // Disable button saat loading
+          const submitBtn = e.target.querySelector('button[type="submit"]');
+          const originalText = submitBtn.textContent;
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Loading...";
 
           try {
             const res = await fetch(`${API_BASE}/api/auth/login`, {
@@ -79,21 +92,29 @@
             const data = await res.json();
 
             if (!res.ok) {
-              alert(data.message || "Login gagal");
+              alert(data.message || "Login gagal. Periksa email dan password.");
+              submitBtn.disabled = false;
+              submitBtn.textContent = originalText;
               return;
             }
 
+            // Simpan token dan user info
             localStorage.setItem("token", data.token);
             localStorage.setItem("user", JSON.stringify(data.user));
 
+            // Redirect ke dashboard
             window.location.href = "dashboard.html";
           } catch (err) {
-            alert("Backend belum nyala.");
+            console.error("Login error:", err);
+            alert("Tidak dapat terhubung ke server. Pastikan backend sudah jalan di http://localhost:3000");
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
           }
         });
 
-      // ✅ GOOGLE LOGIN
+      // ===== LOGIN DENGAN GOOGLE =====
       document.getElementById("googleBtn").addEventListener("click", () => {
+        // Redirect ke endpoint Google OAuth
         window.location.href = `${API_BASE}/api/auth/google`;
       });
     </script>

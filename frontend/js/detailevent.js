@@ -81,7 +81,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const dateRank = ev.dateRank || [];
     const locRank = ev.locRank || [];
-    const myVotes = ev.myVotes || { dateOptionId: null, locationOptionId: null };
+    const myVotes = ev.myVotes || {
+      dateOptionId: null,
+      locationOptionId: null,
+    };
 
     // Header
     el.title.textContent = ev.title || "Untitled";
@@ -138,10 +141,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!v) return alert("Isi tanggal & jam");
       (async () => {
         try {
-          await apiFetch(`/api/events/${encodeURIComponent(code)}/options/datetime`, {
-            method: "POST",
-            body: JSON.stringify({ iso: new Date(v).toISOString() }),
-          });
+          await apiFetch(
+            `/api/events/${encodeURIComponent(code)}/options/datetime`,
+            {
+              method: "POST",
+              body: JSON.stringify({ iso: new Date(v).toISOString() }),
+            }
+          );
           await refresh();
         } catch (err) {
           console.error(err);
@@ -180,10 +186,13 @@ document.addEventListener("DOMContentLoaded", () => {
       ) {
         (async () => {
           try {
-            await apiFetch(`/api/events/${encodeURIComponent(code)}/vote/datetime`, {
-              method: "POST",
-              body: JSON.stringify({ optionId: e.target.dataset.id }),
-            });
+            await apiFetch(
+              `/api/events/${encodeURIComponent(code)}/vote/datetime`,
+              {
+                method: "POST",
+                body: JSON.stringify({ optionId: e.target.dataset.id }),
+              }
+            );
             await refresh();
           } catch (err) {
             console.error(err);
@@ -206,10 +215,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!v) return;
       (async () => {
         try {
-          await apiFetch(`/api/events/${encodeURIComponent(code)}/options/location`, {
-            method: "POST",
-            body: JSON.stringify({ label: v }),
-          });
+          await apiFetch(
+            `/api/events/${encodeURIComponent(code)}/options/location`,
+            {
+              method: "POST",
+              body: JSON.stringify({ label: v }),
+            }
+          );
           await refresh();
         } catch (err) {
           console.error(err);
@@ -248,10 +260,13 @@ document.addEventListener("DOMContentLoaded", () => {
       ) {
         (async () => {
           try {
-            await apiFetch(`/api/events/${encodeURIComponent(code)}/vote/location`, {
-              method: "POST",
-              body: JSON.stringify({ optionId: e.target.dataset.id }),
-            });
+            await apiFetch(
+              `/api/events/${encodeURIComponent(code)}/vote/location`,
+              {
+                method: "POST",
+                body: JSON.stringify({ optionId: e.target.dataset.id }),
+              }
+            );
             await refresh();
           } catch (err) {
             console.error(err);
@@ -311,7 +326,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const endBtn = document.getElementById("endEvent");
     if (endBtn) {
-      endBtn.style.display = ev.ownerUserId && me?.id && ev.ownerUserId === me.id ? "" : "none";
+      endBtn.style.display =
+        ev.ownerUserId && me?.id && ev.ownerUserId === me.id ? "" : "none";
     }
   }
 
@@ -377,7 +393,9 @@ document.addEventListener("DOMContentLoaded", () => {
               method: "POST",
               body: JSON.stringify({}),
             });
-            await refresh();
+
+            // langsung balik ke dashboard
+            window.location.href = "dashboard.html";
           } catch (err) {
             console.error(err);
             alert(err?.message || "Gagal finalize event.");

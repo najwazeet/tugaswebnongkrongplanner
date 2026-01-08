@@ -96,8 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
       `<option value="">Select Attendee</option>` +
       members
         .map(
-          (m) =>
-            `<option value="${m.id}">${NP_UTIL.NP_escape(m.name)}</option>`
+          (m) => `<option value="${m.id}">${NP_UTIL.NP_escape(m.name)}</option>`
         )
         .join("");
   }
@@ -124,7 +123,9 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         <div>
           <span class="meta" style="margin-right:8px">${fmtRp(it.cost)}</span>
-          <button class="rm" data-id="${NP_UTIL.NP_escape(itemId)}">Remove</button>
+          <button class="rm" data-id="${NP_UTIL.NP_escape(
+            itemId
+          )}">Remove</button>
         </div>
       </li>`;
         })
@@ -194,9 +195,9 @@ document.addEventListener("DOMContentLoaded", () => {
       (async () => {
         try {
           await apiFetch(
-            `/api/events/${encodeURIComponent(code)}/bill/items/${encodeURIComponent(
-              itemId
-            )}`,
+            `/api/events/${encodeURIComponent(
+              code
+            )}/bill/items/${encodeURIComponent(itemId)}`,
             { method: "DELETE" }
           );
           await refresh();
@@ -236,17 +237,19 @@ document.addEventListener("DOMContentLoaded", () => {
         rows.push({ name: members[i].name, amount: shares[i] });
       }
     } else {
+      // ITEM mode: summary = total item per attendee SAJA
       const base = new Map(members.map((m) => [m.id, 0]));
+
       for (const it of b.items || []) {
         const k = String(it.assigneeMemberId || "");
         base.set(k, (base.get(k) || 0) + (it.cost || 0));
       }
-      const baseArr = members.map((m) => base.get(m.id) || 0);
-      const sumItems = baseArr.reduce((s, x) => s + x, 0);
-      const leftover = total - sumItems;
-      const shares = distributeRemainder(leftover, n);
+
       for (let i = 0; i < members.length; i++) {
-        rows.push({ name: members[i].name, amount: (baseArr[i] || 0) + shares[i] });
+        rows.push({
+          name: members[i].name,
+          amount: base.get(members[i].id) || 0,
+        });
       }
     }
 

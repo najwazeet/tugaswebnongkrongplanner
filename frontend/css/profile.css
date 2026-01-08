@@ -195,28 +195,97 @@ body {
   color: white;
 }
 
+.btn-save,
+.btn-primary {
+  background: #4a2c2a;
+  color: white;
+  padding: 14px 42px;
+  border-radius: 22px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-save:hover,
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 44, 42, 0.3);
+}
+
+.btn-save:disabled,
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .text-small {
   font-size: 0.85rem;
 }
 
 /* NOTIFICATION PREFERENCE */
 .notif-pref {
-  margin-top: 8px;
+  margin-top: 20px;
+}
+
+.notif-pref h4 {
+  margin: 20px 0 15px;
+  font-size: 14px;
+  color: #666;
+  font-weight: 600;
 }
 
 .switch-group {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: #f0e6cc;
-  padding: 16px 20px;
-  border-radius: 16px;
-  font-size: 0.9rem;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  position: relative;
 }
 
-.switch-group input {
-  width: 18px;
-  height: 18px;
+.switch-group span {
+  font-size: 14px;
+  color: #4a2c2a;
+  flex: 1;
+}
+
+.switch-group input[type="checkbox"] {
+  appearance: none;
+  width: 50px;
+  height: 26px;
+  background: #ddd;
+  border-radius: 13px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  outline: none;
+}
+
+.switch-group input[type="checkbox"]:checked {
+  background: #4caf50;
+}
+
+.switch-group input[type="checkbox"]::before {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.switch-group input[type="checkbox"]:checked::before {
+  transform: translateX(24px);
+}
+
+.switch-group:hover {
+  background: #fafafa;
 }
 
 /* DIVIDER */
@@ -251,21 +320,6 @@ body {
 
 .btn-text.danger {
   color: #cc4444;
-}
-
-/* SAVE BUTTON */
-.btn-save {
-  background: #4a2c2a;
-  color: white;
-  padding: 14px 42px;
-  border-radius: 22px;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-save:hover {
-  transform: translateY(-2px);
 }
 
 /* RESPONSIVE */

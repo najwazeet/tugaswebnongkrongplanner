@@ -64,6 +64,12 @@
     <script>
       const API_BASE = "http://localhost:3000";
 
+      // Redirect jika sudah login
+      if (localStorage.getItem("token")) {
+        window.location.href = "dashboard.html";
+      }
+
+      // ===== REGISTER EMAIL/PASSWORD =====
       document
         .getElementById("registerForm")
         .addEventListener("submit", async (e) => {
@@ -76,10 +82,27 @@
           const confirmPassword =
             document.getElementById("confirmPassword").value;
 
+          // Validasi input
+          if (!username || !email || !password) {
+            alert("Semua field harus diisi!");
+            return;
+          }
+
+          if (password.length < 6) {
+            alert("Password minimal 6 karakter!");
+            return;
+          }
+
           if (password !== confirmPassword) {
             alert("Password dan Confirm Password tidak sama!");
             return;
           }
+
+          // Disable button saat loading
+          const submitBtn = e.target.querySelector('button[type="submit"]');
+          const originalText = submitBtn.textContent;
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Loading...";
 
           try {
             const res = await fetch(`${API_BASE}/api/auth/register`, {
@@ -96,19 +119,29 @@
             const data = await res.json();
 
             if (!res.ok) {
-              alert(data.message || "Register gagal");
+              alert(data.message || "Register gagal. Email mungkin sudah digunakan.");
+              submitBtn.disabled = false;
+              submitBtn.textContent = originalText;
               return;
             }
 
-            alert("Register berhasil! Silakan login.");
-            window.location.href = "login.html";
+            // Langsung simpan token dan redirect ke dashboard
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data.user));
+            
+            alert("Register berhasil! Selamat datang!");
+            window.location.href = "dashboard.html";
           } catch (err) {
-            alert("Backend belum nyala.");
+            console.error("Register error:", err);
+            alert("Tidak dapat terhubung ke server. Pastikan backend sudah jalan di http://localhost:3000");
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
           }
         });
 
-      // ✅ GOOGLE REGISTER
+      // ===== REGISTER DENGAN GOOGLE =====
       document.getElementById("googleBtn").addEventListener("click", () => {
+        // Redirect ke endpoint Google OAuth
         window.location.href = `${API_BASE}/api/auth/google`;
       });
     </script>

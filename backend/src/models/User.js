@@ -11,6 +11,14 @@ const userSchema = new mongoose.Schema(
     googleId: { type: String, index: true },
     name: String,
     photo: String,
+
+    // Notification preferences
+    emailNotifications: {
+      enabled: { type: Boolean, default: true },
+      reminderH3: { type: Boolean, default: true }, // H-3 event
+      reminderH1: { type: Boolean, default: true }, // H-1 event
+      eventUpdates: { type: Boolean, default: true }, // perubahan event
+    },
   },
   { timestamps: true }
 );

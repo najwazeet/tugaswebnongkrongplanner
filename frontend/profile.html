@@ -84,17 +84,42 @@
               <h3 class="section-label">Security & Preferences</h3>
 
               <div class="security-actions">
-                <button class="btn-outline">Change Password</button>
-                <button class="btn-outline text-small">
+                <button class="btn-outline" id="changePasswordBtn">Change Password</button>
+                <button class="btn-outline text-small" id="logoutAllBtn">
                   Logout from all sessions
                 </button>
               </div>
 
               <div class="notif-pref">
+                <h4 style="margin: 20px 0 10px; font-size: 14px; color: #666; font-weight: 600;">Email Notifications</h4>
+                
                 <label class="switch-group">
-                  <span>Email Notifications</span>
-                  <input type="checkbox" checked />
+                  <span>Enable Email Notifications</span>
+                  <input type="checkbox" id="notifEnabled" checked />
+                  <span class="switch-slider"></span>
                 </label>
+
+                <label class="switch-group">
+                  <span>Reminder H-3 (3 days before event)</span>
+                  <input type="checkbox" id="notifH3" checked />
+                  <span class="switch-slider"></span>
+                </label>
+
+                <label class="switch-group">
+                  <span>Reminder H-1 (1 day before event)</span>
+                  <input type="checkbox" id="notifH1" checked />
+                  <span class="switch-slider"></span>
+                </label>
+
+                <label class="switch-group">
+                  <span>Event Updates</span>
+                  <input type="checkbox" id="notifUpdates" checked />
+                  <span class="switch-slider"></span>
+                </label>
+
+                <button class="btn-primary" id="saveNotifBtn" style="margin-top: 15px; width: 100%;">
+                  Save Notification Settings
+                </button>
               </div>
             </div>
           </div>

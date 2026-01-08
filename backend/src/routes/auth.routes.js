@@ -186,8 +186,13 @@ router.get("/google/callback", async (req, res, next) => {
 
     const token = signToken(user);
 
-    // redirect balik ke frontend
-    res.redirect(`http://localhost:5503/auth-success.html?token=${token}`);
+    // redirect balik ke frontend (Live Server biasa di port 5500)
+    const frontendURL = process.env.FRONTEND_URL || "http://localhost:5500";
+    // Cek apakah perlu tambahkan /frontend/ (jika Live Server dari root folder)
+    const redirectPath = frontendURL.includes('5503') 
+      ? `${frontendURL}/frontend/auth-success.html?token=${token}`
+      : `${frontendURL}/auth-success.html?token=${token}`;
+    res.redirect(redirectPath);
   } catch (e) {
     next(e);
   }
@@ -198,7 +203,52 @@ router.get("/me", authRequired, async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
-    res.json({ user: userDto(user) });
+    
+    // Include notification settings in response
+    const userData = {
+      ...userDto(user),
+      emailNotifications: user.emailNotifications || {
+        enabled: true,
+        reminderH3: true,
+        reminderH1: true,
+        eventUpdates: true,
+      },
+    };
+    
+    res.json({ user: userData });
+  } catch (e) {
+    next(e);
+  }
+});
+
+/* ===================== UPDATE NOTIFICATION SETTINGS ===================== */
+router.put("/notifications", authRequired, async (req, res, next) => {
+  try {
+    const { enabled, reminderH3, reminderH1, eventUpdates } = req.body;
+    
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    
+    // Update notification preferences
+    if (typeof enabled === "boolean") {
+      user.emailNotifications.enabled = enabled;
+    }
+    if (typeof reminderH3 === "boolean") {
+      user.emailNotifications.reminderH3 = reminderH3;
+    }
+    if (typeof reminderH1 === "boolean") {
+      user.emailNotifications.reminderH1 = reminderH1;
+    }
+    if (typeof eventUpdates === "boolean") {
+      user.emailNotifications.eventUpdates = eventUpdates;
+    }
+    
+    await user.save();
+    
+    res.json({
+      ok: true,
+      emailNotifications: user.emailNotifications,
+    });
   } catch (e) {
     next(e);
   }
